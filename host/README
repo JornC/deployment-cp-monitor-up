@@ -1,0 +1,3 @@
+# Replace with tomcat user and put in sudoers:
+# sudo visudo
+{{user}} ALL = NOPASSWD: /etc/init.d/apache2 reload, /usr/sbin/service apache2
