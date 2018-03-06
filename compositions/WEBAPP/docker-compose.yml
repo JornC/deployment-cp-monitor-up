@@ -1,0 +1,11 @@
+version: '3'
+services:
+  webapp:
+    image: monitorup-wui:{{service.MONITORUP_WUI.hash}}
+    restart: always
+  components:
+    image: monitorup-components:{{service.MONITORUP_COMPONENTS.hash}}
+    restart: always
+  mock:
+    image: monitorup-mock:{{service.MONITORUP_MOCK.hash}}
+    restart: always
