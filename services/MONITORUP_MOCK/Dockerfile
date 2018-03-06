@@ -21,9 +21,12 @@ RUN git fetch origin
 RUN git fetch origin pull/36/head || true
 RUN git checkout ${gitHash}
 
-RUN mvn install -DskipTests
+RUN mvn install -Pnoclient
 
-RUN mv aerius-wui-monitor-up-client/target/monitorup.war /artifact.war
+WORKDIR aerius-service-mock
+RUN mvn install
+
+RUN mv target/aerius-service-mock-1.5.10.RELEASE.war /artifact.war
 
 # Clean up the build container and start from a tomcat container, copying the artifact
 FROM tomcat:9-jre8-alpine
@@ -41,7 +44,7 @@ EXPOSE 8009
 
 LABEL cp.magic={{cp.magic}}
 LABEL nl.aerius.docker.service=true
-LABEL nl.aerius.docker.service.type=MONITORUP_WUI
+LABEL nl.aerius.docker.service.type=MONITORUP_MOCK
 LABEL nl.aerius.docker.service.prId={{cp.pr.id}}
 LABEL nl.aerius.docker.service.hash={{service.local.hash}}
 
