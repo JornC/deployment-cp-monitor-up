@@ -22,12 +22,6 @@ RUN git init \
     && git pull https://${oAuthToken}@github.com/aerius/aerius-monitor-components.git \
     && git remote add origin https://${oAuthToken}@github.com/aerius/aerius-monitor-components.git
 
-LABEL cp.magic={{cp.magic}}
-LABEL nl.aerius.docker.service=true
-LABEL nl.aerius.docker.service.type=MONITORUP_COMPONENTS
-LABEL nl.aerius.docker.service.prId={{cp.pr.id}}
-LABEL nl.aerius.docker.service.hash={{service.local.hash}}
-
 RUN git fetch \
     && git checkout origin/master
 
@@ -49,5 +43,11 @@ RUN mkdir /usr/local/tomcat/webapps/components
 RUN unzip /components.war -d /usr/local/tomcat/webapps/components/
 
 EXPOSE 8009
+
+LABEL cp.magic={{cp.magic}}
+LABEL nl.aerius.docker.service=true
+LABEL nl.aerius.docker.service.type=MONITORUP_COMPONENTS
+LABEL nl.aerius.docker.service.prId={{cp.pr.id}}
+LABEL nl.aerius.docker.service.hash={{service.local.hash}}
 
 CMD ["catalina.sh", "run"]

@@ -17,11 +17,17 @@ RUN git init \
 ARG gitHash=local
 ENV gitHash ${gitHash}
 
+ARG prId=local
+ENV prId ${prId}
+
 RUN git fetch origin
-RUN git fetch origin pull/36/head || true
+RUN git fetch origin pull/${prId}/head || true
 RUN git checkout ${gitHash}
 
-RUN mvn install -DskipTests
+COPY MockHost.java aerius-wui-monitor-up-client/src/main/java/nl/overheid/aerius/wui/MockHost.java
+COPY MonitorUpMock.gwt.xml aerius-wui-monitor-up-client/src/main/java/nl/overheid/aerius/MonitorUpMock.gwt.xml
+
+RUN mvn install -DskipTests -Daerius.gwt.module=nl.overheid.aerius.MonitorUpMock
 
 RUN mv aerius-wui-monitor-up-client/target/monitorup.war /artifact.war
 
