@@ -1,1 +1,1 @@
-docker build . -t monitorup-mock:{{service.local.hash}} --build-arg gitHash={{cp.pr.hash}} --build-arg oAuthToken={{cp.github.oath.token}}
+docker build . -t monitorup-mock:{{service.local.hash}} --build-arg gitHash={{cp.pr.hash}} --build-arg oAuthToken={{cp.github.oath.token}} --build-arg prId={{cp.pr.id}} --build-arg componentHost=http://{{cp.pr.id}}.components.{{cp.deployment.host}}

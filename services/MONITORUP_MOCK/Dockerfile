@@ -17,8 +17,11 @@ RUN git init \
 ARG gitHash=local
 ENV gitHash ${gitHash}
 
+ARG prId=local
+ENV prId ${prId}
+
 RUN git fetch origin
-RUN git fetch origin pull/36/head || true
+RUN git fetch origin pull/${prId}/head || true
 RUN git checkout ${gitHash}
 
 RUN mvn install -Pnoclient
@@ -39,6 +42,11 @@ RUN apk add --update \
 COPY --from=builder /artifact.war /ROOT.war
 RUN mkdir /usr/local/tomcat/webapps/ROOT
 RUN unzip /ROOT.war -d /usr/local/tomcat/webapps/ROOT/
+
+ARG componentHost=local
+ENV componentHost ${componentHost}
+
+ENV CATALINA_OPTS="-Dmock.webcomponent.host='${componentHost}'"
 
 EXPOSE 8009
 

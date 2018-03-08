@@ -26,7 +26,7 @@ RUN git fetch \
     && git checkout origin/master
 
 RUN mvn dependency:resolve -fn
-RUN mvn install
+RUN mvn install -Pdemo
 
 RUN mv /aerius-monitor-components/target/aerius-web-components-1.0-SNAPSHOT.war /artifact.war
 
@@ -38,9 +38,9 @@ FROM tomcat:9-jre8-alpine
 RUN apk add --update \
     unzip
 
-COPY --from=builder /artifact.war /components.war
-RUN mkdir /usr/local/tomcat/webapps/components
-RUN unzip /components.war -d /usr/local/tomcat/webapps/components/
+COPY --from=builder /artifact.war /aerius-web-components.war
+RUN mkdir /usr/local/tomcat/webapps/aerius-web-components
+RUN unzip /aerius-web-components.war -d /usr/local/tomcat/webapps/aerius-web-components/
 
 EXPOSE 8009
 

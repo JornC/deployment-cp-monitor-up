@@ -1,8 +1,0 @@
-version: '3'
-services:
-  webapp:
-    image: monitorup-wui:test
-    restart: always
-  components:
-    image: monitorup-components:test
-    restart: always
