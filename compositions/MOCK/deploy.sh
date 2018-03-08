@@ -1,4 +1,4 @@
-docker-compose -p WEBAPP-{{cp.pr.id}}-{{cp.pr.hash}} up -d
+docker-compose -p MOCK-{{cp.pr.id}}-{{cp.pr.hash}} up -d
 
 docker ps -a
 echo "Replacing IPs.."
