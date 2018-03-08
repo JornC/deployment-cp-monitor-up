@@ -1,0 +1,5 @@
+version: '3'
+services:
+  mock:
+    image: monitorup-mock:{{service.MONITORUP_MOCK.hash}}
+    restart: always
