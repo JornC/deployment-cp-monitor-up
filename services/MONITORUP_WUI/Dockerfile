@@ -20,6 +20,12 @@ ENV gitHash ${gitHash}
 ARG prId=local
 ENV prId ${prId}
 
+LABEL cp.magic={{cp.magic}}
+LABEL nl.aerius.docker.service=true
+LABEL nl.aerius.docker.service.type=MONITORUP_WUI
+LABEL nl.aerius.docker.service.prId={{cp.pr.id}}
+LABEL nl.aerius.docker.service.hash={{service.local.hash}}
+
 RUN git fetch origin
 RUN git fetch origin pull/${prId}/head || true
 RUN git checkout ${gitHash}
@@ -44,11 +50,5 @@ RUN mkdir /usr/local/tomcat/webapps/ROOT
 RUN unzip /ROOT.war -d /usr/local/tomcat/webapps/ROOT/
 
 EXPOSE 8009
-
-LABEL cp.magic={{cp.magic}}
-LABEL nl.aerius.docker.service=true
-LABEL nl.aerius.docker.service.type=MONITORUP_WUI
-LABEL nl.aerius.docker.service.prId={{cp.pr.id}}
-LABEL nl.aerius.docker.service.hash={{service.local.hash}}
 
 CMD ["catalina.sh", "run"]

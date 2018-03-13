@@ -18,6 +18,10 @@ RUN echo '{ "allow_root": true }' > /root/.bowerrc
 RUN mkdir /aerius-monitor-components
 WORKDIR /aerius-monitor-components
 
+LABEL cp.magic={{cp.magic}}
+LABEL nl.aerius.docker.service=true
+LABEL nl.aerius.docker.service.type=MONITORUP_COMPONENTS
+
 RUN git init \
     && git pull https://${oAuthToken}@github.com/aerius/aerius-monitor-components.git \
     && git remote add origin https://${oAuthToken}@github.com/aerius/aerius-monitor-components.git
@@ -27,6 +31,9 @@ RUN git fetch \
 
 RUN mvn dependency:resolve -fn
 RUN mvn install -Pdemo
+
+LABEL cp.magic={{cp.magic}}
+LABEL nl.aerius.docker.service=true
 
 RUN mv /aerius-monitor-components/target/aerius-web-components-1.0-SNAPSHOT.war /artifact.war
 

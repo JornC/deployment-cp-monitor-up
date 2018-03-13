@@ -20,6 +20,12 @@ ENV gitHash ${gitHash}
 ARG prId=local
 ENV prId ${prId}
 
+LABEL cp.magic={{cp.magic}}
+LABEL nl.aerius.docker.service=true
+LABEL nl.aerius.docker.service.type=MONITORUP_MOCK
+LABEL nl.aerius.docker.service.prId={{cp.pr.id}}
+LABEL nl.aerius.docker.service.hash={{service.local.hash}}
+
 RUN git fetch origin
 RUN git fetch origin pull/${prId}/head || true
 RUN git checkout ${gitHash}
@@ -49,11 +55,5 @@ ENV componentHost ${componentHost}
 ENV CATALINA_OPTS="-Dmock.webcomponent.host='${componentHost}'"
 
 EXPOSE 8009
-
-LABEL cp.magic={{cp.magic}}
-LABEL nl.aerius.docker.service=true
-LABEL nl.aerius.docker.service.type=MONITORUP_MOCK
-LABEL nl.aerius.docker.service.prId={{cp.pr.id}}
-LABEL nl.aerius.docker.service.hash={{service.local.hash}}
 
 CMD ["catalina.sh", "run"]
