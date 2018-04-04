@@ -45,6 +45,12 @@ RUN rm -rf /usr/local/tomcat/webapps/ROOT
 RUN apk add --update \
     unzip
 
+LABEL cp.magic={{cp.magic}}
+LABEL nl.aerius.docker.service=true
+LABEL nl.aerius.docker.service.type=MONITORUP_WUI
+LABEL nl.aerius.docker.service.prId={{cp.pr.id}}
+LABEL nl.aerius.docker.service.hash={{service.local.hash}}
+
 COPY --from=builder /artifact.war /ROOT.war
 RUN mkdir /usr/local/tomcat/webapps/ROOT
 RUN unzip /ROOT.war -d /usr/local/tomcat/webapps/ROOT/

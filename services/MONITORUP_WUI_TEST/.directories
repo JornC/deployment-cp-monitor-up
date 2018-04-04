@@ -1,0 +1,5 @@
+./aerius-wui-common-client
+./aerius-wui-geo-client
+./aerius-wui-geo-ol3-client
+./aerius-wui-monitor-up-client
+./aerius-wui-monitor-up-shared

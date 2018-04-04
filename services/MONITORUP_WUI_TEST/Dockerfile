@@ -22,7 +22,7 @@ ENV prId ${prId}
 
 LABEL cp.magic={{cp.magic}}
 LABEL nl.aerius.docker.service=true
-LABEL nl.aerius.docker.service.type=MONITORUP_MOCK
+LABEL nl.aerius.docker.service.type=MONITORUP_WUI_TEST
 LABEL nl.aerius.docker.service.prId={{cp.pr.id}}
 LABEL nl.aerius.docker.service.hash={{service.local.hash}}
 
@@ -30,12 +30,12 @@ RUN git fetch origin
 RUN git fetch origin pull/${prId}/head || true
 RUN git checkout ${gitHash}
 
-RUN mvn install -Pnoclient
+COPY DemoHost.java aerius-wui-monitor-up-client/src/main/java/nl/overheid/aerius/wui/DemoHost.java
+COPY MonitorUpDemo.gwt.xml aerius-wui-monitor-up-client/src/main/java/nl/overheid/aerius/MonitorUpDemo.gwt.xml
 
-WORKDIR aerius-service-mock
-RUN mvn install
+RUN mvn install -DskipTests -Daerius.gwt.module=nl.overheid.aerius.MonitorUpDemo
 
-RUN mv target/aerius-service-mock-1.5.10.RELEASE.war /artifact.war
+RUN mv aerius-wui-monitor-up-client/target/monitorup.war /artifact.war
 
 # Clean up the build container and start from a tomcat container, copying the artifact
 FROM tomcat:9-jre8-alpine
@@ -45,20 +45,15 @@ RUN rm -rf /usr/local/tomcat/webapps/ROOT
 RUN apk add --update \
     unzip
 
-COPY --from=builder /artifact.war /ROOT.war
-RUN mkdir /usr/local/tomcat/webapps/ROOT
-RUN unzip /ROOT.war -d /usr/local/tomcat/webapps/ROOT/
-
 LABEL cp.magic={{cp.magic}}
 LABEL nl.aerius.docker.service=true
-LABEL nl.aerius.docker.service.type=MONITORUP_MOCK
+LABEL nl.aerius.docker.service.type=MONITORUP_WUI_TEST
 LABEL nl.aerius.docker.service.prId={{cp.pr.id}}
 LABEL nl.aerius.docker.service.hash={{service.local.hash}}
 
-ARG componentHost=local
-ENV componentHost ${componentHost}
-
-ENV CATALINA_OPTS="-Dmock.webcomponent.host='${componentHost}'"
+COPY --from=builder /artifact.war /ROOT.war
+RUN mkdir /usr/local/tomcat/webapps/ROOT
+RUN unzip /ROOT.war -d /usr/local/tomcat/webapps/ROOT/
 
 EXPOSE 8009
 
