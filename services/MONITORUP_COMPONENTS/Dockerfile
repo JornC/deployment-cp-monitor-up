@@ -4,6 +4,8 @@ FROM maven:3-jdk-8 as builder
 ARG oAuthToken=local
 ENV oAuthToken ${oAuthToken}
 
+VOLUME /root/.m2
+
 RUN apt update && apt upgrade -y \
     && apt install git
 # install from nodesource using apt-get
