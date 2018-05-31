@@ -34,7 +34,7 @@ RUN git checkout ${gitHash}
 
 RUN mvn install -Pnoclient
 
-WORKDIR aerius-service-mock
+WORKDIR aerius-selector-server
 RUN mvn install
 
 RUN mv target/aerius-selector-service-1.5.10.RELEASE.war /artifact.war
