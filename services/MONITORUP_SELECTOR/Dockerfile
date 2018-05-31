@@ -22,7 +22,7 @@ ENV prId ${prId}
 
 LABEL cp.magic={{cp.magic}}
 LABEL nl.aerius.docker.service=true
-LABEL nl.aerius.docker.service.type=MONITORUP_MOCK
+LABEL nl.aerius.docker.service.type=MONITORUP_SELECTOR
 LABEL nl.aerius.docker.service.prId={{cp.pr.id}}
 LABEL nl.aerius.docker.service.hash={{service.local.hash}}
 
@@ -35,7 +35,7 @@ RUN mvn install -Pnoclient
 WORKDIR aerius-service-mock
 RUN mvn install
 
-RUN mv target/aerius-service-mock-1.5.10.RELEASE.war /artifact.war
+RUN mv target/aerius-selector-service-1.5.10.RELEASE.war /artifact.war
 
 # Clean up the build container and start from a tomcat container, copying the artifact
 FROM tomcat:9-jre8-alpine
@@ -51,18 +51,9 @@ RUN unzip /ROOT.war -d /usr/local/tomcat/webapps/ROOT/
 
 LABEL cp.magic={{cp.magic}}
 LABEL nl.aerius.docker.service=true
-LABEL nl.aerius.docker.service.type=MONITORUP_MOCK
+LABEL nl.aerius.docker.service.type=MONITORUP_SELECTOR
 LABEL nl.aerius.docker.service.prId={{cp.pr.id}}
 LABEL nl.aerius.docker.service.hash={{service.local.hash}}
-
-ARG componentHost=local
-ENV componentHost ${componentHost}
-
-ARG selectorHost=local
-ENV selectorHost ${selectorHost}
-
-ENV CATALINA_OPTS="-Dmock.webcomponent.host='${componentHost}'"
-ENV CATALINA_OPTS="-Dmock.selector.host='${selectorHost}'"
 
 EXPOSE 8009
 

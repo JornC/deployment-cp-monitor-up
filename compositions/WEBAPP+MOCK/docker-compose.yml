@@ -9,3 +9,6 @@ services:
   mock:
     image: monitorup-mock:{{service.MONITORUP_MOCK.hash}}
     restart: always
+  selector:
+    image: monitorup-selector:{{service.MONITORUP_SELECTOR.hash}}
+    restart: always
