@@ -4,8 +4,6 @@ FROM maven:3-jdk-8 as builder
 ARG oAuthToken=local
 ENV oAuthToken ${oAuthToken}
 
-VOLUME /root/.m2
-
 WORKDIR ~
 
 RUN mkdir aerius-monitor-web
