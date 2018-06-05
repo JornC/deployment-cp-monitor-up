@@ -6,7 +6,7 @@ echo "Replacing IPs.."
 IPComponents=$(docker ps -a | grep monitorup-components:{{service.MONITORUP_COMPONENTS.hash}} | cut -d ' ' -f 1 | xargs docker inspect | grep IPAddress | tail -1 | cut -d ':' -f 2 | cut -d '"' -f 2)
 IPMonitorup=$(docker ps -a | grep monitorup-wui:{{service.MONITORUP_WUI.hash}} | cut -d ' ' -f 1 | xargs docker inspect | grep IPAddress | tail -1 | cut -d ':' -f 2 | cut -d '"' -f 2)
 IPMock=$(docker ps -a | grep monitorup-mock:{{service.MONITORUP_MOCK.hash}} | cut -d ' ' -f 1 | xargs docker inspect | grep IPAddress | tail -1 | cut -d ':' -f 2 | cut -d '"' -f 2)
-IPSelector =$(docker ps -a | grep monitorup-selector:{{service.MONITORUP_SELECTOR.hash}} | cut -d ' ' -f 1 | xargs docker inspect | grep IPAddress | tail -1 | cut -d ':' -f 2 | cut -d '"' -f 2)
+IPSelector=$(docker ps -a | grep monitorup-selector:{{service.MONITORUP_SELECTOR.hash}} | cut -d ' ' -f 1 | xargs docker inspect | grep IPAddress | tail -1 | cut -d ':' -f 2 | cut -d '"' -f 2)
 
 echo "IPComponents is:"
 echo $IPComponents
