@@ -19,9 +19,9 @@ eval $replaceComponents
 
 echo "Replacements complete."
 
-cp site.conf /etc/apache2/sites-available/{{cp.pr.id}}-limoengroen.conf
-a2dissite {{cp.pr.id}}-limoengroen
-a2ensite {{cp.pr.id}}-limoengroen
+cp site.conf /etc/apache2/sites-available/{{cp.pr.id}}-aerius.conf
+a2dissite {{cp.pr.id}}-aerius
+a2ensite {{cp.pr.id}}-aerius
 sudo /etc/init.d/apache2 reload
 sudo /usr/sbin/service apache2 reload
 

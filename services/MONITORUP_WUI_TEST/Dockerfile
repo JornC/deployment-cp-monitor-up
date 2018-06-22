@@ -32,10 +32,7 @@ RUN git fetch origin
 RUN git fetch origin pull/${prId}/head || true
 RUN git checkout ${gitHash}
 
-COPY DemoHost.java aerius-wui-monitor-up-client/src/main/java/nl/overheid/aerius/wui/DemoHost.java
-COPY MonitorUpDemo.gwt.xml aerius-wui-monitor-up-client/src/main/java/nl/overheid/aerius/MonitorUpDemo.gwt.xml
-
-RUN mvn install -DskipTests -Daerius.gwt.module=nl.overheid.aerius.MonitorUpDemo
+RUN mvn install -DskipTests -Daerius.gwt.module=nl.overheid.aerius.MonitorUpAerius
 
 RUN mv aerius-wui-monitor-up-client/target/monitorup.war /artifact.war
 
