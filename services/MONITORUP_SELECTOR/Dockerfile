@@ -37,7 +37,7 @@ RUN mvn install -Pnoclient
 WORKDIR aerius-selector-service
 RUN mvn install
 
-RUN mv target/aerius-selector-service-1.5.12.RELEASE.war /artifact.war
+RUN mv target/aerius-selector-service-2.0.3.RELEASE.war /artifact.war
 
 # Clean up the build container and start from a tomcat container, copying the artifact
 FROM tomcat:9-jre8-alpine
