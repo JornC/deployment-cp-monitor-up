@@ -11,8 +11,7 @@ WORKDIR aerius-monitor-web
 
 RUN git init \
     && git pull https://${oAuthToken}@github.com/aerius/aerius-monitor-web.git \
-    && git remote add origin https://${oAuthToken}@github.com/aerius/aerius-monitor-web.git \
-    && mvn dependency:resolve -fn
+    && git remote add origin https://${oAuthToken}@github.com/aerius/aerius-monitor-web.git
 
 ARG gitHash=local
 ENV gitHash ${gitHash}
