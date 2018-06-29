@@ -32,6 +32,7 @@ RUN git fetch origin pull/${prId}/head || true
 RUN git checkout ${gitHash}
 
 WORKDIR aerius-service-selector
+
 RUN mvn install
 
 RUN mv target/aerius-service-selector.war /artifact.war
