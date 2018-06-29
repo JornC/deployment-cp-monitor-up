@@ -35,7 +35,7 @@ RUN mvn install -Pnoclient
 WORKDIR aerius-service-mock
 RUN mvn install
 
-RUN mv target/aerius-service-mock-1.5.12.RELEASE.war /artifact.war
+RUN mv target/aerius-service-mock.war /artifact.war
 
 # Clean up the build container and start from a tomcat container, copying the artifact
 FROM tomcat:9-jre8-alpine

@@ -34,10 +34,10 @@ RUN git checkout ${gitHash}
 
 RUN mvn install -Pnoclient
 
-WORKDIR aerius-selector-service
+WORKDIR aerius-service-selector
 RUN mvn install
 
-RUN mv target/aerius-selector-service.war /artifact.war
+RUN mv target/aerius-service-selector.war /artifact.war
 
 # Clean up the build container and start from a tomcat container, copying the artifact
 FROM tomcat:9-jre8-alpine
